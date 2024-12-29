@@ -1,13 +1,12 @@
-.dropdown {
+.workStatus {
     position: relative;
-    display: inline-block;
+    display: inline-block; // Чтобы кнопка и меню считались одним контейнером
 
     &__toggle {
-        background: transparent;
-        color: white;
         display: inline-flex;
         align-items: center;
-        justify-content: center;
+        background: transparent;
+        color: white;
         border: 1px solid #555;
         padding: 6px 12px;
         cursor: pointer;
@@ -17,38 +16,31 @@
         }
     }
 
+    &__time {
+        font-size: 18px;
+        font-weight: 600;
+        padding-right: 8px;
+        /* Цвет задаём inline через style={{ color: timeColor }} */
+    }
+
+    &__status {
+        color: white;
+    }
+
     &__menu {
         position: absolute;
         top: 100%;
+        left: 0;
         z-index: 9999;
-        display: none;
+        display: block;
+        /* При {isOpen && ...} оно рендерится */
         background-color: #333;
         color: white;
         border: 1px solid #444;
         border-radius: 4px;
         padding: 8px 0;
-        width: 200px;
+        width: 160px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-
-        &.open {
-            display: block;
-        }
-
-        /* Три класса для выравнивания */
-        &.align-left {
-            left: 0;
-            right: auto;
-        }
-
-        &.align-center {
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        &.align-right {
-            right: 0;
-            left: auto;
-        }
     }
 
     &__item {

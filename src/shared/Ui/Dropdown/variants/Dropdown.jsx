@@ -32,7 +32,7 @@ const Dropdown = ({
                 onClick={toggleDropdown}
                 onBlur={closeDropdown}
             >
-                {label} <FaChevronDown />
+                {label} <FaChevronDown style={{ marginLeft: "8px" }} />
             </button>
 
             <div
