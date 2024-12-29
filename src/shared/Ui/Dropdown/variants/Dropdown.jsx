@@ -2,52 +2,44 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import styles from "../styles/Dropdown.module.scss";
 import { FaChevronDown } from "react-icons/fa";
-import Icon from "@/shared/Ui/Icon/variants/Icon";
 
 /**
- * Компонент Dropdown (label (Текст) + иконка указатель вниз)
+ * Базовый дропдаун (только label, стрелочка вниз, список items).
+ * Теперь умеет align="left" | "center" | "right".
  */
 const Dropdown = ({
     label = "Выберите",
     items = [],
-    linkText = "Подробнее",
-    linkHref = "#",
+    align = "left", // новинка: выравнивание меню
 }) => {
     const [isOpen, setIsOpen] = useState(false);
 
-    // Переключаем состояние на обратное чтоб открыть меню
-    const toggleDropdown = () => {
-        setIsOpen(!isOpen);
-    };
+    const toggleDropdown = () => setIsOpen(!isOpen);
+    const closeDropdown = () => setIsOpen(false);
 
-    // Закрываем меню, когда уводим курсор мыши с контейнера
-    const closeDropdown = () => {
-        setIsOpen(false);
-    };
+    // Определяем класс выравнивания
+    const alignClass =
+        align === "center"
+            ? styles["align-center"]
+            : align === "right"
+                ? styles["align-right"]
+                : styles["align-left"]; // По умолчанию left
 
     return (
-        // Используем стили из модуля: styles.dropdown
-        <div
-            className={styles.dropdown}
-            onMouseLeave={closeDropdown}
-        >
-            {/* Кнопка для открытия/закрытия меню */}
+        <div className={styles.dropdown} onMouseLeave={closeDropdown}>
             <button
                 className={styles.dropdown__toggle}
                 onClick={toggleDropdown}
                 onBlur={closeDropdown}
             >
-                {/* Добавляем иконку Направление вниз */}
                 {label} <FaChevronDown />
             </button>
 
-            {/* Меню дропдауна */}
             <div
-                // Если isOpen === true, добавляем класс .open
                 className={
                     isOpen
-                        ? `${styles.dropdown__menu} ${styles.open}`
-                        : styles.dropdown__menu
+                        ? `${styles.dropdown__menu} ${styles.open} ${alignClass}`
+                        : `${styles.dropdown__menu} ${alignClass}`
                 }
             >
                 {items.map((item, index) => (
@@ -55,20 +47,20 @@ const Dropdown = ({
                         {item}
                     </div>
                 ))}
-                <hr className={styles.dropdown__divider} />
-                <a href={linkHref} className={styles.dropdown__link}>
-                    {linkText}
-                </a>
             </div>
         </div>
     );
 };
 
 Dropdown.propTypes = {
-    label: PropTypes.string,      // Текст кнопки
-    items: PropTypes.array,       // Массив пунктов выпадающего списка
-    linkText: PropTypes.string,   // Текст ссылки
-    linkHref: PropTypes.string,   // URL для ссылки
+    /** Текст кнопки */
+    label: PropTypes.string,
+    /** Массив пунктов выпадающего списка */
+    items: PropTypes.arrayOf(
+        PropTypes.oneOfType([PropTypes.string, PropTypes.node])
+    ),
+    /** Выравнивание меню: left (по умолчанию), center, right */
+    align: PropTypes.oneOf(["left", "center", "right"]),
 };
 
 export default Dropdown;

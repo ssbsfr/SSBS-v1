@@ -4,49 +4,45 @@ import styles from "../styles/IconDropdown.module.scss";
 import { FaChevronDown } from "react-icons/fa";
 
 /**
- * Компонент IconDropdown
- * Аналог Dropdown, но позволяет вставлять иконку (React-элемент) перед label.
+ * Дропдаун с иконкой (react-элемент `icon`) и опциональным `label`.
+ * Умеет align="left" | "center" | "right".
  */
 const IconDropdown = ({
     icon = null,
-    label = "Выберите",
+    label,
     items = [],
-    linkText = "Подробнее",
-    linkHref = "#",
+    align = "left", // новинка: выравнивание меню
 }) => {
     const [isOpen, setIsOpen] = useState(false);
 
-    const toggleDropdown = () => {
-        setIsOpen(!isOpen);
-    };
+    const toggleDropdown = () => setIsOpen(!isOpen);
+    const closeDropdown = () => setIsOpen(false);
 
-    const closeDropdown = () => {
-        setIsOpen(false);
-    };
+    // Определяем класс выравнивания
+    const alignClass =
+        align === "center"
+            ? styles["align-center"]
+            : align === "right"
+                ? styles["align-right"]
+                : styles["align-left"]; // default left
 
     return (
-        <div
-            className={styles.dropdown}
-            onMouseLeave={closeDropdown}
-        >
-            {/* Кнопка для открытия/закрытия меню */}
+        <div className={styles.dropdown} onMouseLeave={closeDropdown}>
             <button
                 className={styles.dropdown__toggle}
                 onClick={toggleDropdown}
                 onBlur={closeDropdown}
             >
-                {/* Иконка, если передана */}
                 {icon && <span className={styles.dropdown__icon}>{icon}</span>}
-                {label}
+                {label && <span className={styles.dropdown__label}>{label}</span>}
                 <FaChevronDown style={{ marginLeft: "8px" }} />
             </button>
 
-            {/* Меню дропдауна */}
             <div
                 className={
                     isOpen
-                        ? `${styles.dropdown__menu} ${styles.open}`
-                        : styles.dropdown__menu
+                        ? `${styles.dropdown__menu} ${styles.open} ${alignClass}`
+                        : `${styles.dropdown__menu} ${alignClass}`
                 }
             >
                 {items.map((item, index) => (
@@ -54,31 +50,22 @@ const IconDropdown = ({
                         {item}
                     </div>
                 ))}
-
-                <hr className={styles.dropdown__divider} />
-
-                <a href={linkHref} className={styles.dropdown__link}>
-                    {linkText}
-                </a>
             </div>
         </div>
     );
 };
 
 IconDropdown.propTypes = {
-    /** Иконка (React-элемент), которая будет отображаться перед label */
+    /** Иконка (React-элемент) */
     icon: PropTypes.node,
-    /** Текст на кнопке */
+    /** Текст кнопки (необязательный) */
     label: PropTypes.string,
-    /** Массив пунктов */
-    items: PropTypes.arrayOf(PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.node,
-    ])),
-    /** Текст ссылки внизу дропдауна */
-    linkText: PropTypes.string,
-    /** URL для ссылки */
-    linkHref: PropTypes.string,
+    /** Массив пунктов меню */
+    items: PropTypes.arrayOf(
+        PropTypes.oneOfType([PropTypes.string, PropTypes.node])
+    ),
+    /** Выравнивание меню */
+    align: PropTypes.oneOf(["left", "center", "right"]),
 };
 
 export default IconDropdown;

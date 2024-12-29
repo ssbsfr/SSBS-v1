@@ -24,12 +24,10 @@
     }
 
     &__avatarWrapper {
-        /* Дополнительный класс-обёртка, если нужно ограничить размер */
         width: 32px;
         height: 32px;
         overflow: hidden;
         border-radius: 50%;
-        /* округляем */
         display: flex;
         align-items: center;
         justify-content: center;
@@ -38,7 +36,6 @@
     &__menu {
         position: absolute;
         top: 100%;
-        left: 0;
         z-index: 9999;
         display: none;
         background-color: #333;
@@ -52,6 +49,22 @@
         &.open {
             display: block;
         }
+
+        /* Три класса для выравнивания */
+        &.align-left {
+            left: 0;
+            right: auto;
+        }
+
+        &.align-center {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        &.align-right {
+            right: 0;
+            left: auto;
+        }
     }
 
     &__item {
@@ -60,24 +73,6 @@
 
         &:hover {
             background-color: #444;
-        }
-    }
-
-    &__divider {
-        border-top: 1px solid #555;
-        margin: 5px 0;
-    }
-
-    &__link {
-        display: block;
-        text-align: center;
-        color: #007bff;
-        text-decoration: none;
-        font-weight: bold;
-        padding: 5px 0;
-
-        &:hover {
-            color: #0056b3;
         }
     }
 }
