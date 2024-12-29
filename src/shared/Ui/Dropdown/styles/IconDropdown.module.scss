@@ -1,0 +1,70 @@
+.dropdown {
+    position: relative;
+    display: inline-block; // или block/flex по необходимости
+
+    &__toggle {
+        background: transparent;
+        color: white;
+        border: 1px solid #555;
+        padding: 6px 12px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+
+        &:hover {
+            background-color: #444;
+        }
+    }
+
+    &__icon {
+        margin-right: 6px;
+        display: flex; // чтобы иконка была по центру
+        align-items: center;
+    }
+
+    &__menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 9999;
+        display: none;
+        background-color: #333;
+        color: white;
+        border: 1px solid #444;
+        border-radius: 4px;
+        padding: 8px 0;
+        width: 200px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+        &.open {
+            display: block;
+        }
+    }
+
+    &__item {
+        padding: 10px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #444;
+        }
+    }
+
+    &__divider {
+        border-top: 1px solid #555;
+        margin: 5px 0;
+    }
+
+    &__link {
+        display: block;
+        text-align: center;
+        color: #007bff;
+        text-decoration: none;
+        font-weight: bold;
+        padding: 5px 0;
+
+        &:hover {
+            color: #0056b3;
+        }
+    }
+}
