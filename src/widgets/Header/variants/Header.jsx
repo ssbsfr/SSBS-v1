@@ -1,12 +1,12 @@
-import "../styles/Header.scss"; // ваши глобальные стили
-import Icon from '@/shared/Ui/Icon/variants/Icon';
-import Dropdown from '@/shared/Ui/Dropdown/variants/Dropdown';
-import IconDropdown from '@/shared/Ui/Dropdown/variants/IconDropdown'; // <-- новый импорт
+import "../styles/Header.scss";
+import Icon from "@/shared/Ui/Icon/variants/Icon";
+import Dropdown from "@/shared/Ui/Dropdown/variants/Dropdown";
+import IconDropdown from "@/shared/Ui/Dropdown/variants/IconDropdown";
+import AvatarDropdown from "@/shared/Ui/Dropdown/variants/AvatarDropdown"; // <-- Новый импорт
 
 export default function Header() {
     return (
         <div className="header">
-            {/* Левая часть шапки */}
             <div className="header__left">
                 <img
                     src="src/widgets/Aside/Image/logossbs.png"
@@ -15,11 +15,8 @@ export default function Header() {
                 />
             </div>
 
-            {/* Центральная часть */}
             <div className="header__center">
-                {/* Левый центральный блок с дропдаунами */}
                 <div className="header__center-left">
-                    {/* ИСПОЛЬЗУЕМ IconDropdown для "Компания" */}
                     <IconDropdown
                         label="Компания"
                         icon={
@@ -35,58 +32,39 @@ export default function Header() {
                         linkHref="#"
                     />
 
-                    {/* Остальные дропдауны — как раньше */}
-                    <Dropdown
+                    {/* Замена Dropdown -> AvatarDropdown */}
+                    <AvatarDropdown
                         label="Пользователь"
-                        items={['Профиль', 'Настройки']}
+                        // Если хотим передать свою картинку вместо дефолтной иконки:
+                        // avatar={<img src="..." alt="User" />}
+                        items={["Профиль", "Настройки"]}
                         linkText="Выход"
                         linkHref="#"
                     />
+
                     <Dropdown
                         label="Пространство"
-                        items={['Проект 1', 'Проект 2']}
+                        items={["Проект 1", "Проект 2"]}
                         linkText="Добавить"
                         linkHref="#"
                     />
                 </div>
 
-                {/* Правый центральный блок */}
                 <div className="header__center-right">
                     <Dropdown
                         label="Статус работы"
-                        items={['Активен', 'Отключен']}
+                        items={["Активен", "Отключен"]}
                         linkText="Подробнее"
                         linkHref="#"
                     />
                 </div>
             </div>
 
-            {/* Правая часть с иконками */}
             <div className="header__right">
-                <Icon
-                    iconName="Masseges"
-                    library="md"
-                    size="24px"
-                    color="white"
-                />
-                <Icon
-                    iconName="Reference"
-                    library="gr"
-                    size="24px"
-                    color="white"
-                />
-                <Icon
-                    iconName="Night"
-                    library="md"
-                    size="24px"
-                    color="white"
-                />
-                <Icon
-                    iconName="DoorOpen"
-                    library="lu"
-                    size="24px"
-                    color="white"
-                />
+                <Icon iconName="Masseges" library="md" size="24px" color="white" />
+                <Icon iconName="Reference" library="gr" size="24px" color="white" />
+                <Icon iconName="Night" library="md" size="24px" color="white" />
+                <Icon iconName="DoorOpen" library="lu" size="24px" color="white" />
             </div>
         </div>
     );
